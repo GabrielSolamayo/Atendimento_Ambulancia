@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface BairroRepository extends JpaRepository<Bairro, Integer> {
 	
 	Bairro findByNomeBairro(String nomeBairro);
+	
+	
 }
