@@ -26,6 +26,22 @@ public class AtendimentoApplication {
 	    
 	    //Loop para cadastrar todos os bairro;
 	    for (String bairro : bairros) atendimento.adicionarBairro(bairro);
+	    
+	    //Conexões - contém bairro e bairro vizinho (adjacente)
+	    atendimento.conectarBairros("Pinheiros", "Vila Madalena");
+	    atendimento.conectarBairros("Pinheiros", "Butantã");
+	    atendimento.conectarBairros("Pinheiros", "Alto de Pinheiros");
+	    atendimento.conectarBairros("Vila Madalena", "Perdizes");
+	    atendimento.conectarBairros("Perdizes", "Lapa");
+	    atendimento.conectarBairros("Lapa", "Barra Funda");
+	    atendimento.conectarBairros("Butantã", "Jaguaré");
+	    atendimento.conectarBairros("Jaguaré", "Vila Leopoldina");
+	    atendimento.conectarBairros("Butantã", "Vila Sônia");
+	    atendimento.conectarBairros("Vila Sônia", "Morumbi");
+	    atendimento.conectarBairros("Morumbi", "Rio Pequeno");
+	    atendimento.conectarBairros("Perdizes", "Pompéia");
+	    atendimento.conectarBairros("Pinheiros", "Jardim Paulista");
+	    atendimento.conectarBairros("Jardim Paulista", "Itaim Bibi");
 	}
 
 }
