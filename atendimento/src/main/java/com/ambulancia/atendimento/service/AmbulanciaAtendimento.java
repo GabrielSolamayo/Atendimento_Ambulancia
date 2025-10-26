@@ -6,6 +6,7 @@ import com.ambulancia.atendimento.model.Bairro;
 import com.ambulancia.atendimento.model.Hospital;
 import com.ambulancia.atendimento.repository.BairroRepository;
 import com.ambulancia.atendimento.repository.ConexaoBairroRepository;
+import com.ambulancia.atendimento.repository.HospitalRepository;
 import com.ambulancia.atendimento.model.ConexaoBairro;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class AmbulanciaAtendimento {
 
 	@Autowired
 	private ConexaoBairroRepository conexaoBairroRepository;
+	
+	@Autowired
+	private HospitalRepository hospitalRepository;
 
 	public void adicionarBairro(String nome) {
 
@@ -74,6 +78,33 @@ public class AmbulanciaAtendimento {
 		conexaoBairroRepository.save(conexao);
 		System.out.println("Conexão criada com sucesso entre '" + bairroOrigem + "' e '" + bairroVizinho + "'.");
 	
+	}
+	
+	public void adicionarHospital(String nomeHospital, String nomeBairro, int totalLeitos, int leitosOcupados) {
+		
+		Bairro bairro = bairroRepository.findByNomeBairro(nomeBairro);
+		boolean hospitalExiste = hospitalRepository.existsByNomeHospital(nomeHospital);
+		
+		//Tratamento de erro;
+		if(bairro == null) { //Se o bairro nao existe;
+			System.out.println("Erro: O bairro '"+nomeBairro+"' nao esta no banco");
+			return;
+		} else if(hospitalExiste) {
+			System.out.println("Erro: Este '"+nomeHospital+"' já esta cadastrado em um Bairro");
+			return;
+		}
+		
+		
+		//Adicionando o hospital ao BD;
+		Hospital hospital = new Hospital();
+		hospital.setNomeHospital(nomeHospital);
+		hospital.setBairro(bairro);
+		hospital.setLotacaoTotal(totalLeitos);
+		hospital.setLotacaoOcupada(leitosOcupados);
+		
+		hospitalRepository.save(hospital);
+		System.out.println("Hospital: '" + nomeHospital + "' adicionado ao bairro '" + nomeBairro + "' com sucesso!");
+		
 	}
 
 }
