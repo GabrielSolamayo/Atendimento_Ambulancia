@@ -24,6 +24,8 @@ public class AmbulanciaAtendimento {
 	@Autowired
 	private HospitalRepository hospitalRepository;
 
+	
+	//Cadastra o Bairro em sua respectiva tabela no BD;
 	public void adicionarBairro(String nome) {
 
 		Bairro existente = bairroRepository.findByNomeBairro(nome);// Checa se já existe no banco;
@@ -42,6 +44,8 @@ public class AmbulanciaAtendimento {
 		return bairroRepository.findAll();// Consulta o BD quando precisar;
 	}
 
+	
+	//Cadastra a conexao de dois Bairros em sua respectiva tabela;
 	public void conectarBairros(String bairroOrigem, String bairroVizinho) {
 
 		Bairro origem = bairroRepository.findByNomeBairro(bairroOrigem);
@@ -80,6 +84,9 @@ public class AmbulanciaAtendimento {
 	
 	}
 	
+	
+	//Cadastra Hospital em sua respectiva tabela;
+	//Cadastra hospital em sua tabela respectiva;
 	public void adicionarHospital(String nomeHospital, String nomeBairro, int totalLeitos, int leitosOcupados) {
 		
 		Bairro bairro = bairroRepository.findByNomeBairro(nomeBairro);
@@ -89,8 +96,8 @@ public class AmbulanciaAtendimento {
 		if(bairro == null) { //Se o bairro nao existe;
 			System.out.println("Erro: O bairro '"+nomeBairro+"' nao esta no banco");
 			return;
-		} else if(hospitalExiste) {
-			System.out.println("Erro: Este '"+nomeHospital+"' já esta cadastrado em um Bairro");
+		} else if(hospitalExiste) {//Se o hospital JA existe;
+			System.out.println("Erro: Este  Hospital '"+nomeHospital+"' já esta cadastrado em um Bairro");
 			return;
 		}
 		
@@ -107,4 +114,37 @@ public class AmbulanciaAtendimento {
 		
 	}
 
+	
+	public String encontrarHospital(String bairroInicio) {
+		
+		Bairro bairro = bairroRepository.findByNomeBairro(bairroInicio);
+		
+		if(bairro == null) {//Se o Bairro nao existir no banco;
+			System.out.println("Erro: o bairro '" + bairroInicio + "' não existe no banco.");
+	        return null;
+		}
+		
+		
+		
+	}
+	
+	//Verificar o melhor hospital do Bairro atual;
+	private Hospital verificarHospitalBairro(Bairro bairro) {
+		List<Hospital> hospitais = hospitalRepository.findByBairro(bairro); //Lista todos os hospitais do bairro;
+		if(hospitais.isEmpty()) {//Se nao houver hospitais dentro deste Bairro;
+			return null;
+		}
+		
+		Hospital melhorHospital = hospitais.get(0);//Se presume o melhor hospital o primeiro da lista (por enquanto);
+		for(Hospital h : hospitais) {
+			if(h.getLotacaoOcupada() < h.getLotacaoTotal()) {
+				return h; //Achou uma vaga e retorna;
+			}
+			//Caso contrário, guarda o menos cheio para comparação posterior;
+			if(h.getLotacaoOcupada() - h.getLotacaoTotal() < melhorHospital.getLotacaoOcupada() - melhorHospital.getLotacaoTotal()) {
+				melhorHospital = h;
+			}
+		}
+		return melhorHospital;//Retorna o hospital menos cheio do Bairro;
+	}
 }
