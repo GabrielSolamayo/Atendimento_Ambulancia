@@ -59,6 +59,10 @@ public class AtendimentoApplication {
 	    atendimento.adicionarHospital("São Camilo Pompéia", "Pompéia", 40, 40);
 	    atendimento.adicionarHospital("Sírio-Libanês Jardins", "Jardim Paulista", 60, 60);
 	    atendimento.adicionarHospital("São Luiz Itaim", "Itaim Bibi", 55, 55);
+	    
+	    
+	    
+	    System.out.println(atendimento.encontrarHospital("Pinheiros"));
 	}
 
 }

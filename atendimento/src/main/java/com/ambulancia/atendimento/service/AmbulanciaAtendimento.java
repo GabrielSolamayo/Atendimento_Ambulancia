@@ -1,7 +1,9 @@
 package com.ambulancia.atendimento.service;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import com.ambulancia.atendimento.model.Bairro;
 import com.ambulancia.atendimento.model.Hospital;
 import com.ambulancia.atendimento.repository.BairroRepository;
@@ -117,15 +119,57 @@ public class AmbulanciaAtendimento {
 	
 	public String encontrarHospital(String bairroInicio) {
 		
-		Bairro bairro = bairroRepository.findByNomeBairro(bairroInicio);
-		
-		if(bairro == null) {//Se o Bairro nao existir no banco;
+		//Verificamos se o BairroInicial existe;
+		Bairro bairroInicial = bairroRepository.findByNomeBairro(bairroInicio);
+		if(bairroInicial == null) {//Se o Bairro nao existir no banco;
 			System.out.println("Erro: o bairro '" + bairroInicio + "' não existe no banco.");
 	        return null;
 		}
 		
 		
+		//Iniciamos a busca;
+		List<Bairro> fila = new ArrayList<>(); // Lista para a busca em largura;
+		fila.add(bairroInicial);
+		int nivel = 0;
+		String resultado;
+		Hospital melhorHospital = null;//Guarda o hospital menos cheio;
 		
+		
+		while (!fila.isEmpty() && nivel <= 3) {
+			List<Bairro> proximoNivel = new ArrayList<>();
+			
+			for(Bairro atual : fila) {
+				
+				Hospital hospital = verificarHospitalBairro(atual);
+				
+				// Se achou um com vaga, retorna imediatamente;
+				if(hospital != null && hospital.getLotacaoOcupada() < hospital.getLotacaoTotal()) {
+					return resultado = "Hospital: '"+hospital.getNomeHospital()+"' encontrada com "+(hospital.getLotacaoTotal() - hospital.getLotacaoOcupada())+" vagas.";
+				}
+				
+				// Caso contrário, guarda o menos cheio (para o cenário sem vagas)
+				if (hospital != null) {
+	                if (melhorHospital == null || (hospital.getLotacaoOcupada() - hospital.getLotacaoTotal()) <
+	                        (melhorHospital.getLotacaoOcupada() - melhorHospital.getLotacaoTotal())) {
+	                    melhorHospital = hospital;
+	                }
+	            }
+				
+				// pega os bairros vizinhos via repositório
+	            List<Bairro> vizinhos = conexaoBairroRepository.findVizinhos(atual);
+	            proximoNivel.addAll(vizinhos);
+			}
+			
+			fila = proximoNivel; // substitui a fila pelo próximo nível
+	        nivel++;
+		}
+		
+		if (melhorHospital != null) {
+	        System.out.println("Nenhum hospital com vaga disponível. Retornando o menos cheio: " + melhorHospital.getNomeHospital());
+	        return melhorHospital.getNomeHospital();
+	    }
+		System.out.println("Nenhum hospital encontrado próximo ao bairro '" + bairroInicio + "'.");
+	    return null;
 	}
 	
 	//Verificar o melhor hospital do Bairro atual;
