@@ -45,11 +45,12 @@
             <div class="bloco-resultado">
                 <h2 class="titulo-resultado">Resultado da Busca</h2>
                 <div id="resultado-operacao">
-                    <div th:if="${hospital != null}">
-                        <p><strong>Nome do Hospital: </strong><span th:text="${hospital.nomeHospital}"></span></p>
-                        <p><strong>Bairro: </strong><span th:text="${hospital.bairro.nomeBairro}"></span></p>
-                        <p><strong>Lotação Total: </strong><span th:text="${hospital.lotacaoTotal}"></span></p>
-                        <p><strong>Lotação Ocupada: </strong><span th:text="${hospital.lotacaoOcupada}"></span></p>
+                    <div class="unidade-destaque" th:if="${hospital != null}">
+                        <p class="nome-unidade"><span th:text="${hospital.nomeHospital} + ' - ' + ${hospital.bairro.nomeBairro}"></p>
+                        <p><strong>Lotação Livres: </strong><span th:text="${(hospital.lotacaoTotal - hospital.lotacaoOcupada)}"></span></p>
+						<p><strong>Lotação atual: </strong>
+						  <span th:text="${T(java.lang.Math).round((hospital.lotacaoOcupada * 100.0) / hospital.lotacaoTotal)} + '%'"></span>
+						</p>
                     </div>
                     <div th:if="${hospital == null}">
                         <p>Nenhum hospital encontrado para o bairro selecionado.</p>
