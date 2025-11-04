@@ -1,0 +1,401 @@
+/*====================================== */
+/* Cores principais */
+:root {
+    --cor-principal: #147A73;
+    --cor-secundaria-clara: #f0f7f7;
+    --borda-geral: #cccccc;
+    --cor-texto: #333;
+}
+
+/* Configurações gerais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: var(--cor-secundaria-clara);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+/*====================================== */
+
+/*====================================== */
+/* Cabeçalho */
+.header {
+    background-color: white;
+    padding: 20px 30px;
+    border-bottom: 1px solid var(--borda-geral);
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+/* Botões de navegação */
+.nav {
+    display: flex;
+    gap: 40px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--cor-texto);
+    font-weight: 500;
+    padding: 5px;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: #007bff;
+}
+/*====================================== */
+
+/*====================================== */
+/* Conteúdo Principal */
+.main-content {
+    display: flex;
+    flex: 1; 
+    padding: 20px;
+    gap: 20px;
+}
+
+/* Barra lateral (esquerda) */
+.barra-lateral {
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Segmento superior esquerdo - Entrada de dados */
+.bloco-info {
+    background-color: white;
+    border: 1px solid var(--borda-geral);
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Título Nova Solicitação */
+.bloco-info h3 {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: var(--cor-texto);
+    margin-bottom: 15px; 
+    padding-bottom: 5px;  
+    border-bottom: 1px solid #eee; 
+}
+
+/* Interação do usuário */
+.campo-bairro select:focus {
+    outline: none;
+    border-color: var(--cor-principal);
+    box-shadow: 0 0 0 2px rgba(20, 122, 115, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.campo-bairro label {
+    font-weight: normal;
+    color: var(--cor-texto);
+    white-space: nowrap;
+}
+
+/* Lista de bairros para seleção */
+.campo-bairro select {
+    flex-grow: 1;
+    padding: 8px 10px;
+    border: 1px solid var(--borda-geral);
+    border-radius: 5px;
+    font-size: 1em;
+    background-color: #f9f9f9;
+    font-weight: bold;
+    color: var(--cor-texto);
+}
+
+/* Botão de localizar a unidade*/
+.botao-localizar-unidade {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--cor-principal);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    margin-top: 10px;
+}
+
+.botao-localizar-unidade:hover {
+    background-color: #1a958b;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para o botão de busca quando desabilitado */
+.botao-localizar-unidade:disabled {
+    background-color: #cccccc; /* Cor cinza para indicar desabilitado */
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+/*====================================== */
+
+/*====================================== */
+/* Segmento inferior esquerdo - Saída de dados */
+.bloco-resultado {
+    background-color: white;
+    border: 1px solid var(--borda-geral);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.titulo-resultado {
+    background-color: var(--cor-principal);
+    padding: 15px 15px;
+    font-size: 1.3em;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+    border-radius: 8px 8px 0px 0px;
+    border: 1px solid #cccccc;
+}
+/*====================================== */
+
+/*====================================== */
+/* Conteúdo da direita - Mapa e tabela */
+
+/* Container geral */
+.main-content-direita {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Primeiro segmento - Mapa e botões */
+.bloco-central-topo {
+    height: 200px;
+}
+
+/* Espaço para as divs do mapa e dos botões*/
+.mapa-com-botoes {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    gap: 15px;
+}
+
+/* Div exclusiva para renderização do Mapa */
+#mapa-container {
+    flex: 1;
+    height: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    border: solid 1px var(--borda-geral);
+}
+
+/* Div exclusiva para os botões */
+.controles-mapa {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 180px;
+    margin-top: 35px;
+}
+
+/* Estilo dos botões da direita */
+.botao-mapa {
+    width: 100%;
+    height: 50px;
+    padding: 12px;
+    background-color: var(--cor-principal);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.botao-mapa:hover {
+    background-color: #1a958b;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+/*====================================== */
+
+/*====================================== */
+/* Segmento da tabela - Área inferior direita */
+#tabela-detalhes {
+    flex: 1;
+    background-color: white;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid var(--borda-geral);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tabela-unidades{
+    width: 100%;
+    border-collapse: collapse; /* une as bordas das células */
+    margin: 20px 0;
+    font-size: 15px;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9; /* alterna a cor das linhas */
+}
+
+tr:hover {
+  background-color: #e6f7ff; /* destaca a linha ao passar o mouse */
+  cursor: pointer; /* Adicionado para indicar que a linha é clicável */
+}
+
+/* Estilo para a linha da tabela selecionada */
+.tabela-unidades tbody tr.selecionada {
+    background-color: #e0f7fa; /* Cor de destaque (verde claro/ciano) */
+    border: 2px solid var(--cor-principal);
+}
+/*====================================== */
+
+/*====================================== */
+/* Estilização do conteúdo gerado após o clique do botão */
+#resultado-operacao h3{
+    font-size: 1.1em;
+    padding: 15px 15px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.unidade-destaque {
+    padding-bottom: 10px;
+    margin-bottom: 5px;
+    margin-left: 20px;
+}
+
+.unidade-destaque .nome-unidade {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: var(--cor-principal);
+    margin-bottom: 5px;
+}
+
+.unidade-destaque p {
+    margin-bottom: 2px;
+}
+
+.lotacao-critica {
+    color: red; /* Destaque para lotação alta */
+    font-weight: bold;
+}
+
+.divisor {
+    border: 0;
+    border-top: 1px solid var(--borda-geral);
+    margin: 10px 0;
+}
+
+h4 {
+    font-size: 1em;
+    margin-bottom: 5px;
+    font-weight: bold;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.outras-unidades {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 15px;
+    line-height: 1.4;
+    margin-left: 20px;
+}
+
+.outras-unidades li {
+    font-size: 0.9em;
+    color: var(--cor-texto);
+    margin-bottom: 5px;
+}
+/*====================================== */
+
+/*====================================== */
+/* Estilização dos Botões de Ação no Resultado da Busca (Novos Botões) */
+.controles-resultado {
+    display: flex;
+    justify-content: space-between; /* Distribui o espaço entre os botões */
+    padding: 15px;
+    gap: 10px; /* Espaço entre os botões */
+    border-top: 1px solid var(--borda-geral); /* Linha divisória sutil */
+}
+
+.botao-acao {
+    flex: 1; /* Faz com que os botões ocupem o mesmo espaço */
+    padding: 10px;
+    background-color: var(--cor-principal);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.botao-acao:hover:not(:disabled) {
+    background-color: #1a958b;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para botões de ação desabilitados */
+.botao-acao:disabled {
+    background-color: #cccccc; /* Cor cinza para indicar desabilitado */
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+/*====================================== */
+
+/*====================================== */
+/* Estilização do Modal (Lightbox) */
+.modal {
+    /* Oculto por padrão */
+    display: none; /* <--- ESTA LINHA É CRUCIAL */
+    /* Posição fixa para cobrir toda a tela */
+    position: fixed; 
+    z-index: 1000; /* Garante que fique acima de tudo */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    /* Fundo escuro e semi-transparente (o "overlay") */
+    background-color: rgba(0, 0, 0, 0.7); 
+    /* Centraliza o conteúdo */
+    justify-content: center;
+    align-items: center;
+}
+/* ... o restante do CSS do modal ... */
+
+

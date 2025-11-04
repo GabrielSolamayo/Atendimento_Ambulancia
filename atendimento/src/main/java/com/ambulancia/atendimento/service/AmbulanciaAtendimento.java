@@ -117,7 +117,9 @@ public class AmbulanciaAtendimento {
 	}
 
 	
-	public String encontrarHospital(String bairroInicio) {
+	public Hospital encontrarHospital(String bairroInicio) {
+		
+		System.out.println("bairro recebido: "+bairroInicio);
 		
 		//Verificamos se o BairroInicial existe;
 		Bairro bairroInicial = bairroRepository.findByNomeBairro(bairroInicio);
@@ -144,7 +146,8 @@ public class AmbulanciaAtendimento {
 				
 				// Se achou um com vaga, retorna imediatamente;
 				if(hospital != null && hospital.getLotacaoOcupada() < hospital.getLotacaoTotal()) {
-					return resultado = "Hospital: '"+hospital.getNomeHospital()+"' encontrada com "+(hospital.getLotacaoTotal() - hospital.getLotacaoOcupada())+" vagas.";
+					System.out.println("Hospital: '"+hospital.getNomeHospital()+"' encontrada com "+(hospital.getLotacaoTotal() - hospital.getLotacaoOcupada())+" vagas.");
+					return hospital;
 				}
 				
 				// Caso contrário, guarda o menos cheio (para o cenário sem vagas)
@@ -166,7 +169,7 @@ public class AmbulanciaAtendimento {
 		
 		if (melhorHospital != null) {
 	        System.out.println("Nenhum hospital com vaga disponível. Retornando o menos cheio: " + melhorHospital.getNomeHospital());
-	        return melhorHospital.getNomeHospital();
+	        return melhorHospital;
 	    }
 		System.out.println("Nenhum hospital encontrado próximo ao bairro '" + bairroInicio + "'.");
 	    return null;

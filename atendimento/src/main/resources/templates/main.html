@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Z.O. Emergências - Buscar Hospital</title>
+    <link rel="stylesheet" href="/css/main_style.css">
+    <script async src="https://maps.googleapis.com/maps/api/js?key=CHAVE&callback=initMap"></script>
+    <!-- <script type="text/javascript" src="/js/javas.js"></script> -->
+</head>
+
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="/" class="nav-link">Início</a>
+            <a href="#" class="nav-link">Sobre o projeto</a>
+        </nav>
+    </header>
+    <main class="main-content">
+
+        <aside class="barra-lateral">
+
+            <div class="bloco-info">
+
+                <h3>Nova Solicitação:</h3>
+                <form action="/buscarHospital" method="post">
+                <div class="campo-bairro">
+
+                    <label for="bairro-select">Bairro:</label>
+                    <select id="bairro-select" name="bairro" required>
+                        <option value="">Selecione um Bairro</option>
+                        <th:block th:each="bairro: ${bairros}">
+                            <option th:value="${bairro.nomeBairro}" th:text="${bairro.nomeBairro}"></option>
+                        </th:block>
+                    </select>
+
+                </div>
+                <button type="submit" class="botao-localizar-unidade" id="btn-localizar-unidade">
+                    Localizar Unidade de Saúde
+                </button>
+                </form>
+            </div>
+
+            <div class="bloco-resultado">
+                <h2 class="titulo-resultado">Resultado da Busca</h2>
+                <div id="resultado-operacao">
+                    <div th:if="${hospital != null}">
+                        <p><strong>Nome do Hospital: </strong><span th:text="${hospital.nomeHospital}"></span></p>
+                        <p><strong>Bairro: </strong><span th:text="${hospital.bairro.nomeBairro}"></span></p>
+                        <p><strong>Lotação Total: </strong><span th:text="${hospital.lotacaoTotal}"></span></p>
+                        <p><strong>Lotação Ocupada: </strong><span th:text="${hospital.lotacaoOcupada}"></span></p>
+                    </div>
+                    <div th:if="${hospital == null}">
+                        <p>Nenhum hospital encontrado para o bairro selecionado.</p>
+                    </div>
+                </div>
+                <div class="controles-resultado">
+                    <button class="botao-acao" id="btn-confirmar" disabled>
+                        Confirmar
+                    </button>
+                    <button class="botao-acao" id="btn-localizar-novamente" disabled>
+                        Localizar Novamente
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <div class="main-content-direita">
+            <div class="bloco-central-topo">
+                <div class="mapa-com-botoes">
+                    <div id="mapa-container"></div>
+                    <div class="controles-mapa">
+                        <button class="botao-mapa" id="btn-alternar"> Botão 1 </button>
+                        <button class="botao-mapa" id="btn-fullscreen"> Botão 2 </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="tabela-detalhes">
+                <h3>Unidades de Saúde na Região Oeste</h3>
+                <table class="tabela-unidades">
+                    <thead>
+                        <tr>
+                            <th>Unidade</th>
+                            <th>Bairro</th>
+                            <th>Lotação Máxima</th>
+                            <th>Lotação Atual</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpo-tabela-unidades">
+                        <tr data-unidade-id="123" class="unidade-row">
+                            <td>UPA III Lapa</td>
+                            <td>Lapa</td>
+                            <td>50</td>
+                            <td>30</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    <!-- Estrutura do Modal (Lightbox) -->
+    <div id="modal-imagem" class="modal">
+        <!-- Conteúdo do Modal -->
+        <div class="modal-conteudo">
+            <!-- Botão de Fechar -->
+            <span class="fechar-modal">&times;</span>
+            <!-- Imagem Placeholder -->
+            <img id="imagem-placeholder" src="img/ambulancia.webp" alt="Imagem de Exemplo" class="imagem-modal">
+            <!-- Você pode mudar o src="img/ambulancia.webp" para a imagem que desejar -->
+        </div>
+    </div>
+
+</body>
+
+</html>

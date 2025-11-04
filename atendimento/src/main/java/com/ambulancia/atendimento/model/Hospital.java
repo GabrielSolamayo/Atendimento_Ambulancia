@@ -22,7 +22,7 @@ public class Hospital implements Serializable{
 	private int lotacaoOcupada;
 	
 	//Relacionamento com Bairro
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "idBairro", nullable = false)
 	private Bairro bairro; //Relacionamento com Bairro
 	
