@@ -60,7 +60,7 @@
                                 th:text="${T(java.lang.Math).round((hospital.lotacaoOcupada * 100.0) / hospital.lotacaoTotal)} + '%'"></span>
                         </p>
                     </div>
-                    <div th:if="${hospital == null}">
+                    <div th:if="${buscaExecutada} and ${hospital == null}">
                         <p>Nenhum hospital encontrado para o bairro selecionado.</p>
                     </div>
                 </div>

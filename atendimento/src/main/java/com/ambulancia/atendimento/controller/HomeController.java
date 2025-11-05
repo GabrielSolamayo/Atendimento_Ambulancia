@@ -67,6 +67,7 @@ public class HomeController {
 		model.addAttribute("resultadoEncontrado", hospitalEncontrado != null);
 		model.addAttribute("hospitais", hospitais);
 		model.addAttribute("modalAberto", false);
+		model.addAttribute("buscaExecutada", true);
 		
 		return "main"; //Retorna a mesma pagina, mas agora com resultado;
 	}
