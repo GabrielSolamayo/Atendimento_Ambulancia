@@ -43,11 +43,11 @@ public class Hospital implements Serializable{
 	
 	//GETTER AND SETTER;
 
-	public int getdHospital() {
+	public int getIdHospital() {
 		return idHospital;
 	}
 
-	public void setdHospital(int dHospital) {
+	public void setIdHospital(int dHospital) {
 		this.idHospital = dHospital;
 	}
 

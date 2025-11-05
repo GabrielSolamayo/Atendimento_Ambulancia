@@ -413,7 +413,7 @@ h4 {
 /* Estilização do Modal (Lightbox) */
 .modal {
     /* Oculto por padrão */
-    display: none; /* <--- ESTA LINHA É CRUCIAL */
+    display: flex; /* <--- ESTA LINHA É CRUCIAL (none) */
     /* Posição fixa para cobrir toda a tela */
     position: fixed; 
     z-index: 1000; /* Garante que fique acima de tudo */
@@ -428,5 +428,13 @@ h4 {
     align-items: center;
 }
 /* ... o restante do CSS do modal ... */
+.modal-conteudo img {
+    max-width: 90%;   /* já não ultrapassa a largura do modal */
+    max-height: 80vh; /* limita a altura a 80% da altura da tela */
+    object-fit: contain;
+    display: block;
+    margin-top: 10px; /* pequeno espaçamento do topo */
+    margin-bottom: 10px; /* opcional, deixa um respiro embaixo */
+}
 
 

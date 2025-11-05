@@ -12,11 +12,11 @@
 
 <body>
     <header class="header">
-            <a href="/" class="logo">
+        <a href="/" class="logo">
             <img src="/img/iconPNG.png" alt="Logo Z.O. Emergências" class="logo-img">
             <span class="logo-text">Z.O. Emergências</span>
         </a>
-        
+
         <nav class="nav">
             <a href="/" class="nav-link">Início</a>
             <a href="#" class="nav-link">Sobre o projeto</a>
@@ -30,20 +30,20 @@
 
                 <h3>Nova Solicitação:</h3>
                 <form action="/buscarHospital" method="post">
-                <div class="campo-bairro">
+                    <div class="campo-bairro">
 
-                    <label for="bairro-select">Bairro:</label>
-                    <select id="bairro-select" name="bairro" required>
-                        <option value="">Selecione um Bairro</option>
-                        <th:block th:each="bairro: ${bairros}">
-                            <option th:value="${bairro.nomeBairro}" th:text="${bairro.nomeBairro}"></option>
-                        </th:block>
-                    </select>
+                        <label for="bairro-select">Bairro:</label>
+                        <select id="bairro-select" name="bairro" required>
+                            <option value="">Selecione um Bairro</option>
+                            <option th:each="bairro : ${bairros}" th:value="${bairro.nomeBairro}"
+                                th:text="${bairro.nomeBairro}" th:selected="${bairro.nomeBairro == bairroSelecionado}">
+                            </option>
+                        </select>
 
-                </div>
-                <button type="submit" class="botao-localizar-unidade" id="btn-localizar-unidade">
-                    Localizar Unidade de Saúde
-                </button>
+                    </div>
+                    <button type="submit" class="botao-localizar-unidade" id="btn-localizar-unidade">
+                        Localizar Unidade de Saúde
+                    </button>
                 </form>
             </div>
 
@@ -51,23 +51,44 @@
                 <h2 class="titulo-resultado">Resultado da Busca</h2>
                 <div id="resultado-operacao">
                     <div class="unidade-destaque" th:if="${hospital != null}">
-                        <p class="nome-unidade"><span th:text="${hospital.nomeHospital} + ' - ' + ${hospital.bairro.nomeBairro}"></p>
-                        <p><strong>Lotação Livres: </strong><span th:text="${(hospital.lotacaoTotal - hospital.lotacaoOcupada)}"></span></p>
-						<p><strong>Lotação atual: </strong>
-						  <span th:text="${T(java.lang.Math).round((hospital.lotacaoOcupada * 100.0) / hospital.lotacaoTotal)} + '%'"></span>
-						</p>
+                        <p class="nome-unidade"><span
+                                th:text="${hospital.nomeHospital} + ' - ' + ${hospital.bairro.nomeBairro}"></p>
+                        <p><strong>Lotação Livres: </strong><span
+                                th:text="${(hospital.lotacaoTotal - hospital.lotacaoOcupada)}"></span></p>
+                        <p><strong>Lotação atual: </strong>
+                            <span
+                                th:text="${T(java.lang.Math).round((hospital.lotacaoOcupada * 100.0) / hospital.lotacaoTotal)} + '%'"></span>
+                        </p>
                     </div>
                     <div th:if="${hospital == null}">
                         <p>Nenhum hospital encontrado para o bairro selecionado.</p>
                     </div>
                 </div>
+
                 <div class="controles-resultado">
-                    <button class="botao-acao" id="btn-confirmar" disabled>
-                        Confirmar
-                    </button>
-                    <button class="botao-acao" id="btn-localizar-novamente" disabled>
-                        Localizar Novamente
-                    </button>
+
+                    <form action="/confirmarAtendimento" method="post" style="display: inline;">
+                        <div th:if="${hospital != null}">
+                            <input type="hidden" name="idHospital" th:value="${hospital.idHospital}" />
+                        </div>
+                        <button type="submit" class="botao-acao" id="btn-confirmar"
+                            th:disabled="${!resultadoEncontrado}">
+                            Confirmar
+                        </button>
+                    </form>
+
+                    <form action="/localizarNovamente" method="post" style="display: inline;">
+                        <input type="hidden" name="bairro" th:value="${bairroSelecionado}" />
+                        <button type="submit" class="botao-acao" id="btn-localizar-novamente"
+                            th:disabled="${!resultadoEncontrado}">
+                            Localizar Novamente
+                        </button>
+                    </form>
+
+                </div>
+
+                <div th:if="${mensagem}" class="mensagem">
+                    <p th:text="${mensagem}"></p>
                 </div>
             </div>
         </aside>
@@ -78,7 +99,10 @@
                     <div id="mapa-container"></div>
                     <div class="controles-mapa">
                         <button class="botao-mapa" id="btn-alternar"> Botão 1 </button>
-                        <button class="botao-mapa" id="btn-fullscreen"> Visualizar Mapa </button>
+                        <form action="/abrirModal" method="post">
+                            <button class="botao-mapa" id="btn-fullscreen"> Visualizar Mapa </button>
+                        </form>
+
                     </div>
                 </div>
 
@@ -96,29 +120,40 @@
                         </tr>
                     </thead>
                     <tbody id="corpo-tabela-unidades">
-                        <tr data-unidade-id="123" class="unidade-row">
-                            <td>UPA III Lapa</td>
-                            <td>Lapa</td>
-                            <td>50</td>
-                            <td>30</td>
+                        <!-- Itera sobre os hospitais vindos do Controller -->
+                        <tr th:each="hospital : ${hospitais}" class="unidade-row"
+                            th:data-unidade-id="${hospital.idHospital}">
+                            <td th:text="${hospital.nomeHospital}">Nome do Hospital</td>
+                            <td th:text="${hospital.bairro.nomeBairro}">Bairro</td>
+                            <td th:text="${hospital.lotacaoTotal}">0</td>
+                            <td th:text="${hospital.lotacaoOcupada}">0</td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(hospitais)}">
+                            <td colspan="4">Nenhuma Unidade encontrada</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+
         </div>
     </main>
-
-    <!-- Estrutura do Modal (Lightbox) -->
-     <div id="modal-imagem" class="modal">
-        <!-- Conteúdo do Modal -->
-        <div class="modal-conteudo">
-            <!-- Botão de Fechar -->
-            <span class="fechar-modal">&times;</span>
-            <!-- Imagem Placeholder -->
-            <img id="imagem-placeholder" src="img/Mapa.jpg" alt="Imagem de Exemplo" class="imagem-modal">
-            <!-- Você pode mudar o src="img/ambulancia.webp" para a imagem que desejar -->
-        </div>
+    <div id="modal-imagem" class="modal" th:if="${modalAberto}">
+    <div class="modal-conteudo">
+        <!-- Botão X no canto superior -->
+        <form method="post" action="/fecharModal" style="position:absolute; top:10px; right:10px;">
+            <button type="submit" class="fechar-modal" 
+                style="background:none; border:none; font-size:1.5rem; color:white; cursor:pointer;">&times;</button>
+        </form>
+        
+        <!-- Imagem do mapa -->
+        <img th:src="@{/img/Mapa.jpg}" alt="Mapa" class="imagem-modal">
     </div>
+</div>
+
+
+
+
+
 
 </body>
 

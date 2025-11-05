@@ -15,5 +15,7 @@ public interface HospitalRepository extends JpaRepository<Hospital, Integer> {
 	
 	//Método para saber o(s) hospital(ais) pertencentes a um Bairro;
 	List<Hospital> findByBairro(Bairro bairro);
+	
+	
 
 }
