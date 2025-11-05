@@ -194,4 +194,17 @@ public class AmbulanciaAtendimento {
 		}
 		return melhorHospital;//Retorna o hospital menos cheio do Bairro;
 	}
+	
+	// Buscar hospitais por bairro
+    public List<Hospital> buscarHospitaisPorBairro(String nomeBairro) {
+        Bairro bairro = bairroRepository.findByNomeBairro(nomeBairro);
+        if (bairro != null) {
+            return hospitalRepository.findByBairro(bairro);
+        }
+        return new ArrayList<>();
+    }
+	//Buscar todos os Hospitais;
+	public List<Hospital> buscarTodosHospitais() {
+	    return hospitalRepository.findAll();
+	}
 }
