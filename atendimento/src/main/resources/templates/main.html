@@ -98,18 +98,21 @@
                 <div class="mapa-com-botoes">
                     <div id="mapa-container"></div>
                     <div class="controles-mapa">
-                        <button class="botao-mapa" id="btn-alternar"> Botão 1 </button>
+                        <button class="botao-mapa" id="btn-alternar"> Ir até o local </button>
                         <form action="/abrirModal" method="post">
-                            <button class="botao-mapa" id="btn-fullscreen"> Visualizar Mapa </button>
+                            <button class="botao-mapa" id="btn-fullscreen"> Visualizar mapa </button>
                         </form>
-                        <button id="botaoAtualizar" class="botao-mapa">Atualizar</button>
                     </div>
                 </div>
 
             </div>
 
             <div id="tabela-detalhes">
-                <h3>Unidades de Saúde na Região Oeste</h3>
+                <div class="tabela-header">
+                    <h3>Unidades de Saúde na Região Oeste</h3>
+                    
+                    <button id="botaoAtualizar" class="botao-atualizar">Atualizar</button>
+                </div>
                 <table class="tabela-unidades">
                     <thead>
                         <tr>

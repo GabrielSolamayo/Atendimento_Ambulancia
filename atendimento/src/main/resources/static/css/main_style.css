@@ -278,6 +278,33 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.tabela-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tabela-header h3 {
+    margin: 0;
+}
+
+.botao-atualizar {
+    padding: 5px 15px;
+    background-color: white;
+    color: #000;
+    border: solid 1px #000;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.7em;
+    font-weight: 500;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.botao-atualizar:hover {
+    background-color: #ebebeb;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
 .tabela-unidades{
     width: 100%;
     border-collapse: collapse; /* une as bordas das células */
