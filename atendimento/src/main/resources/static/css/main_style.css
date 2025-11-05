@@ -1,8 +1,12 @@
+/* Imports */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
 /*====================================== */
-/* Cores principais */
+/* Variáveis */ 
 :root {
+    /* Cores principais */
     --cor-principal: #147A73;
-    --cor-secundaria-clara: #f0f7f7;
+    --cor-secundaria-clara: #f9f9f9;
     --borda-geral: #cccccc;
     --cor-texto: #333;
 }
@@ -12,7 +16,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
 }
 
 body {
@@ -23,33 +27,55 @@ body {
 }
 /*====================================== */
 
-/*====================================== */
 /* Cabeçalho */
 .header {
-    background-color: white;
-    padding: 20px 30px;
-    border-bottom: 1px solid var(--borda-geral);
+    background-color: #f4f9f9;
+    padding: 0px 20px;
+    border-bottom: 1px solid #076f72;
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
+    align-items: center;
     width: 100%;
+    box-shadow: 0px 2px 4px rgba(20, 122, 115, 0.315);
+    position: relative;
+    z-index: 10;
+}
+
+/* Container Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+/* Imagem da logo */
+.logo-img {
+    height: 70px;
+}
+
+/* Texto da logo */
+.logo-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #016568;
 }
 
 /* Botões de navegação */
 .nav {
     display: flex;
     gap: 40px;
+    margin-left: auto;
 }
 
 .nav-link {
     text-decoration: none;
-    color: var(--cor-texto);
-    font-weight: 500;
+    color: #333;
     padding: 5px;
     transition: color 0.3s;
 }
 
 .nav-link:hover {
-    color: #007bff;
+    color: #076f72;
 }
 /*====================================== */
 
@@ -74,7 +100,7 @@ body {
 .bloco-info {
     background-color: white;
     border: 1px solid var(--borda-geral);
-    padding: 20px;
+    padding: 15px 20px;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
@@ -84,15 +110,20 @@ body {
 
 /* Título Nova Solicitação */
 .bloco-info h3 {
-    font-size: 1.1em;
+    font-size: 1em;
     font-weight: bold;
     color: var(--cor-texto);
-    margin-bottom: 15px; 
-    padding-bottom: 5px;  
+    padding-bottom: 10px; 
     border-bottom: 1px solid #eee; 
 }
 
 /* Interação do usuário */
+.campo-bairro {
+    display: flex;           
+    align-items: center;     
+    gap: 8px;                
+}
+
 .campo-bairro select:focus {
     outline: none;
     border-color: var(--cor-principal);
@@ -123,16 +154,16 @@ body {
 /* Botão de localizar a unidade*/
 .botao-localizar-unidade {
     width: 100%;
-    padding: 12px;
+    padding: 10px;
     background-color: var(--cor-principal);
     color: white;
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 1em;
+    font-size: 0.8rem;
     font-weight: bold;
     transition: background-color 0.3s, box-shadow 0.3s;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .botao-localizar-unidade:hover {
@@ -142,7 +173,7 @@ body {
 
 /* Estilo para o botão de busca quando desabilitado */
 .botao-localizar-unidade:disabled {
-    background-color: #cccccc; /* Cor cinza para indicar desabilitado */
+    background-color: #cccccc;
     cursor: not-allowed;
     opacity: 0.6;
 }
@@ -162,13 +193,12 @@ body {
 
 .titulo-resultado {
     background-color: var(--cor-principal);
-    padding: 15px 15px;
-    font-size: 1.3em;
+    padding: 12px 15px;
+    font-size: 1rem;
     font-weight: 600;
     color: white;
     margin: 0;
     border-radius: 8px 8px 0px 0px;
-    border: 1px solid #cccccc;
 }
 /*====================================== */
 
@@ -185,7 +215,7 @@ body {
 
 /* Primeiro segmento - Mapa e botões */
 .bloco-central-topo {
-    height: 200px;
+    height: 180px;
 }
 
 /* Espaço para as divs do mapa e dos botões*/
@@ -295,6 +325,7 @@ tr:hover {
     padding-bottom: 10px;
     margin-bottom: 5px;
     margin-left: 20px;
+	margin-top: 15px;
 }
 
 .unidade-destaque .nome-unidade {
